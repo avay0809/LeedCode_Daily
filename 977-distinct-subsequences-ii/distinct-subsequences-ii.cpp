@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int distinctSubseqII(string s) {
+        const int MOD = 1e9 + 7;
+
+        // dp[i] = number of distinct subsequences
+        // ending with character i
+        vector<long long> dp(26, 0);
+
+        for (char c : s) {
+            int idx = c - 'a';
+
+            long long total = 1;  // empty subsequence
+
+            for (int i = 0; i < 26; i++) {
+                total = (total + dp[i]) % MOD;
+            }
+
+            dp[idx] = total;
+        }
+
+        long long ans = 0;
+
+        for (int i = 0; i < 26; i++) {
+            ans = (ans + dp[i]) % MOD;
+        }
+
+        return ans;
+    }
+};
